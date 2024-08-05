@@ -17,7 +17,12 @@ function Students() {
           }
         );
 
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
         const data = await response.json();
+        setEnrollments(data);
       } catch (error) {
         console.error("Error fetching enrollments:", error);
       }
@@ -30,13 +35,17 @@ function Students() {
     <div className="students-list">
       <h2>All Students Enrolled in Courses</h2>
       <ul>
-        {enrollments.map((enrollment) => (
-          <li key={enrollment._id}>
-            <strong>{enrollment.userId.username}</strong>
-            {enrollment.userId.email}
-            <strong>{enrollment.classId.title}</strong>
-          </li>
-        ))}
+        {enrollments.length > 0 ? (
+          enrollments.map((enrollment) => (
+            <li key={enrollment._id}>
+              <strong>{enrollment.userId.username}</strong> -{" "}
+              {enrollment.userId.email} -
+              <strong>{enrollment.classId.title}</strong>
+            </li>
+          ))
+        ) : (
+          <li>No enrollments found.</li>
+        )}
       </ul>
     </div>
   );

@@ -15,11 +15,14 @@ function Header() {
         <Link to="/" className="header-links">
           Home
         </Link>
-        <Link to="/classes" className="header-links">
-          Classes
+        <Link to="/add-classes" className="header-links">
+          Add Classes
         </Link>
         <Link to="/students" className="header-links">
           Students
+        </Link>
+        <Link to="/classes" className="header-links">
+          Classes
         </Link>
       </div>
       <div className="auth-links">

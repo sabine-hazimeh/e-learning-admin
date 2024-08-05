@@ -61,6 +61,7 @@
     "pump": "^3.0.0",
     "quick-lru": "^5.1.1",
     "react-router-dom": "^6.26.0",
+    "react-toastify": "^10.0.5",
     "resolve-alpn": "^1.2.1",
     "responselike": "^2.0.1",
     "roarr": "^2.15.4",

@@ -4,8 +4,10 @@ import Header from "./Header";
 import Home from "./Home";
 import Login from "./Login";
 import SignUp from "./Sign Up";
-import Classes from "./Classes";
+import AddClasses from "./AddClasses";
 import Students from "./Students";
+import Classes from "./Classes";
+import FileUpload from "./Files";
 function App() {
   return (
     <BrowserRouter>
@@ -14,8 +16,10 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/classes" element={<Classes />} />
+        <Route path="/add-classes" element={<AddClasses />} />
         <Route path="/students" element={<Students />} />
+        <Route path="/classes" element={<Classes />} />
+        <Route path="/files" element={<FileUpload />} />
       </Routes>
     </BrowserRouter>
   );
