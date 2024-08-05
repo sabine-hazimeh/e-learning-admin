@@ -17,7 +17,6 @@ function Login() {
       });
       const { token } = response.data;
       localStorage.setItem("authToken", token);
-
       navigate("/");
     } catch (error) {
       console.error("Login failed:", error);

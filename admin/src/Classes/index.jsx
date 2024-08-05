@@ -36,10 +36,18 @@ function Classes() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const token = localStorage.getItem("authToken");
+
       const response = await axios.post(
         "http://localhost:3000/api/classes",
-        formData
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
+
       alert("Class created successfully!");
       setFormData({
         title: "",
@@ -52,7 +60,9 @@ function Classes() {
         },
       });
     } catch (error) {
-      alert("Error creating class: " + error.response.data.error);
+      alert(
+        "Error creating class: " + error.response?.data?.error || error.message
+      );
     }
   };
 
