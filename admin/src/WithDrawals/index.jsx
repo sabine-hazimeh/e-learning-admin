@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./style.css"; // Ensure this CSS file has the necessary styles
+import "./style.css";
 
 function WithDrawals() {
   const [withdrawals, setWithdrawals] = useState([]);
@@ -31,6 +31,38 @@ function WithDrawals() {
     fetchWithdrawals();
   }, []);
 
+  const handleReject = async (id) => {
+    try {
+      const token = localStorage.getItem("authToken");
+      await axios.delete(`http://localhost:3000/api/withdrawals/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setWithdrawals(withdrawals.filter((withdrawal) => withdrawal._id !== id));
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const handleAccept = async (id) => {
+    try {
+      const token = localStorage.getItem("authToken");
+      await axios.post(
+        `http://localhost:3000/api/withdrawals/accept/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setWithdrawals(withdrawals.filter((withdrawal) => withdrawal._id !== id));
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
@@ -59,9 +91,19 @@ function WithDrawals() {
                 <b>Requested At:</b>{" "}
                 {new Date(withdrawal.requestedAt).toLocaleDateString()}
               </p>
-              <div>
-                <button className="button accept">Accept</button>
-                <button className="button reject">Reject</button>
+              <div className="buttons">
+                <button
+                  className="button accept"
+                  onClick={() => handleAccept(withdrawal._id)}
+                >
+                  Accept
+                </button>
+                <button
+                  className="button reject"
+                  onClick={() => handleReject(withdrawal._id)}
+                >
+                  Reject
+                </button>
               </div>
             </li>
           ))}
