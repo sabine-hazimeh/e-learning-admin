@@ -24,6 +24,9 @@ function Header() {
         <Link to="/classes" className="header-links">
           Classes
         </Link>
+        <Link to="/withdrawals" className="header-links">
+          WithDrawals
+        </Link>
       </div>
       <div className="auth-links">
         <Link to="/login" className="header-link">

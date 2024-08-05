@@ -8,6 +8,7 @@ import AddClasses from "./AddClasses";
 import Students from "./Students";
 import Classes from "./Classes";
 import FileUpload from "./Files";
+import WithDrawals from "./WithDrawals";
 function App() {
   return (
     <BrowserRouter>
@@ -20,6 +21,7 @@ function App() {
         <Route path="/students" element={<Students />} />
         <Route path="/classes" element={<Classes />} />
         <Route path="/files" element={<FileUpload />} />
+        <Route path="/withdrawals" element={<WithDrawals />} />
       </Routes>
     </BrowserRouter>
   );

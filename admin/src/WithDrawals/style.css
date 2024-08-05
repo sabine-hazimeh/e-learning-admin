@@ -1,0 +1,71 @@
+.withdrawals-list {
+  padding: 20px;
+}
+
+.withdrawals-list h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.withdrawals-list ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.withdrawal-item {
+  border: 1px solid #007bff;
+  padding: 15px;
+  border-radius: 8px;
+
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.withdrawal-item p {
+  margin: 5px 0;
+}
+
+.withdrawal-item strong {
+  display: inline-block;
+  width: 120px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.button {
+  padding: 8px 25px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.button.accept {
+  background-color: #007bff;
+}
+
+.button.reject {
+  background-color: #f44336;
+}
+
+@media (max-width: 768px) {
+  .withdrawals-list ul {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .withdrawals-list ul {
+    grid-template-columns: 1fr;
+  }
+}
