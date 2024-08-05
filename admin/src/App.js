@@ -5,6 +5,7 @@ import Home from "./Home";
 import Login from "./Login";
 import SignUp from "./Sign Up";
 import Classes from "./Classes";
+import Students from "./Students";
 function App() {
   return (
     <BrowserRouter>
@@ -14,6 +15,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/classes" element={<Classes />} />
+        <Route path="/students" element={<Students />} />
       </Routes>
     </BrowserRouter>
   );

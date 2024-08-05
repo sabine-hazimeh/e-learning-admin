@@ -18,6 +18,9 @@ function Header() {
         <Link to="/classes" className="header-links">
           Classes
         </Link>
+        <Link to="/students" className="header-links">
+          Students
+        </Link>
       </div>
       <div className="auth-links">
         <Link to="/login" className="header-link">
