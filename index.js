@@ -9,11 +9,6 @@ function createMainWindow() {
     height: 600,
   });
 
-  const startUrl = url.format({
-    pathname: path.join(__dirname, "index.html"),
-    protocol: "file",
-  });
-
-  mainWindow.loadURL(startUrl);
+  mainWindow.loadURL("http://localhost:3002");
 }
 app.whenReady().then(createMainWindow);
