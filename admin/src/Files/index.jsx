@@ -3,17 +3,18 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./style.css";
+import { useNavigate } from "react-router-dom";
 
 function FileUpload() {
   const [file, setFile] = useState(null);
-
+  const navigate = useNavigate();
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
 
-  const handleUpload = async () => {
+  const handleFileUpload = async () => {
     if (!file) {
-      toast.error("Please select a file to upload");
+      toast.error("Please select a file first");
       return;
     }
 
@@ -22,22 +23,18 @@ function FileUpload() {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/files",
+        "http://localhost:3000/api/file",
         formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            // Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
-      toast.success("File uploaded successfully");
+      toast.success("File uploaded successfully!");
+      navigate("/");
     } catch (error) {
-      toast.error("File upload failed");
-      console.error(
-        "Error uploading file:",
-        error.response?.data || error.message
-      );
+      toast.error("Failed to upload file");
     }
   };
 
@@ -45,9 +42,10 @@ function FileUpload() {
     <div className="file-upload-container">
       <h2>Upload a File</h2>
       <input type="file" className="file-input" onChange={handleFileChange} />
-      <button className="upload-button" onClick={handleUpload}>
+      <button className="upload-button" onClick={handleFileUpload}>
         Upload
       </button>
+      <ToastContainer />
     </div>
   );
 }
