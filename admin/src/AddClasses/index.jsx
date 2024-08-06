@@ -1,5 +1,12 @@
+// src/components/AddClasses.js
 import React, { useState } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import {
+  addClassStart,
+  addClassSuccess,
+  addClassFailure,
+} from "../data-source/redux/ClassesSlice/slice";
 import "./style.css";
 
 function AddClasses() {
@@ -13,6 +20,7 @@ function AddClasses() {
       timings: "",
     },
   });
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,6 +43,7 @@ function AddClasses() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(addClassStart());
     try {
       const token = localStorage.getItem("authToken");
 
@@ -48,6 +57,7 @@ function AddClasses() {
         }
       );
 
+      dispatch(addClassSuccess(response.data));
       alert("Class created successfully!");
       setFormData({
         title: "",
@@ -60,6 +70,7 @@ function AddClasses() {
         },
       });
     } catch (error) {
+      dispatch(addClassFailure(error.response?.data?.error || error.message));
       alert(
         "Error creating class: " + error.response?.data?.error || error.message
       );

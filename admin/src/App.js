@@ -10,6 +10,7 @@ import Classes from "./Classes";
 import FileUpload from "./Files";
 import WithDrawals from "./WithDrawals";
 import PrivateRoute from "./PrivateRoute";
+
 function App() {
   return (
     <BrowserRouter>

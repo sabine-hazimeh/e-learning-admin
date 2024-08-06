@@ -2,11 +2,17 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./style.css";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {
+  loginSuccess,
+  loginFailure,
+} from "../data-source/redux/UserSlice/slice";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -15,10 +21,13 @@ function Login() {
         username,
         password,
       });
-      const { token } = response.data;
+      const { token, user } = response.data;
       localStorage.setItem("authToken", token);
+
+      dispatch(loginSuccess({ token, user }));
       navigate("/");
     } catch (error) {
+      dispatch(loginFailure({ error: error.message }));
       console.error("Login failed:", error);
     }
   };
