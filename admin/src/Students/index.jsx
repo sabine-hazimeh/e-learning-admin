@@ -1,11 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  fetchEnrollmentsStart,
+  fetchEnrollmentsSuccess,
+  fetchEnrollmentsFailure,
+} from "../data-source/redux/StudentsSlice/slice";
 import "./style.css";
 
 function Students() {
-  const [enrollments, setEnrollments] = useState([]);
+  const dispatch = useDispatch();
+  const { enrollments, isLoading, error } = useSelector(
+    (state) => state.students
+  );
 
   useEffect(() => {
     async function fetchEnrollments() {
+      dispatch(fetchEnrollmentsStart());
       try {
         const token = localStorage.getItem("authToken");
         const response = await fetch(
@@ -22,18 +32,20 @@ function Students() {
         }
 
         const data = await response.json();
-        setEnrollments(data);
+        dispatch(fetchEnrollmentsSuccess(data));
       } catch (error) {
-        console.error("Error fetching enrollments:", error);
+        dispatch(fetchEnrollmentsFailure(error.message));
       }
     }
 
     fetchEnrollments();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="students-list">
       <h2>All Students Enrolled in Courses</h2>
+      {isLoading && <p>Loading...</p>}
+      {error && <p>Error: {error}</p>}
       <ul>
         {enrollments.length > 0 ? (
           enrollments.map((enrollment) => (

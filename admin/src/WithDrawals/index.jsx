@@ -1,14 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  fetchWithdrawalsStart,
+  fetchWithdrawalsSuccess,
+  fetchWithdrawalsFailure,
+  acceptWithdrawal,
+  rejectWithdrawal,
+} from "../data-source/redux/WithDrawals/slice";
 import axios from "axios";
 import "./style.css";
 
 function WithDrawals() {
-  const [withdrawals, setWithdrawals] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+  const { withdrawals, isLoading, error } = useSelector(
+    (state) => state.withdrawals
+  );
 
   useEffect(() => {
     async function fetchWithdrawals() {
+      dispatch(fetchWithdrawalsStart());
       try {
         const token = localStorage.getItem("authToken");
         const response = await axios.get(
@@ -20,16 +30,14 @@ function WithDrawals() {
           }
         );
 
-        setWithdrawals(response.data);
-        setLoading(false);
+        dispatch(fetchWithdrawalsSuccess(response.data));
       } catch (err) {
-        setError(err.message);
-        setLoading(false);
+        dispatch(fetchWithdrawalsFailure(err.message));
       }
     }
 
     fetchWithdrawals();
-  }, []);
+  }, [dispatch]);
 
   const handleReject = async (id) => {
     try {
@@ -39,9 +47,9 @@ function WithDrawals() {
           Authorization: `Bearer ${token}`,
         },
       });
-      setWithdrawals(withdrawals.filter((withdrawal) => withdrawal._id !== id));
+      dispatch(rejectWithdrawal(id));
     } catch (err) {
-      setError(err.message);
+      dispatch(fetchWithdrawalsFailure(err.message));
     }
   };
 
@@ -57,13 +65,13 @@ function WithDrawals() {
           },
         }
       );
-      setWithdrawals(withdrawals.filter((withdrawal) => withdrawal._id !== id));
+      dispatch(acceptWithdrawal(id));
     } catch (err) {
-      setError(err.message);
+      dispatch(fetchWithdrawalsFailure(err.message));
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
