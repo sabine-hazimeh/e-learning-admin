@@ -1,4 +1,3 @@
-// src/components/Classes.js
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -53,7 +52,7 @@ function Classes() {
             <p>
               End Date: {new Date(course.schedule.endDate).toLocaleDateString()}
             </p>
-            <Link to="/files">
+            <Link to={`/files/${course._id}`}>
               <button className="enroll-button">Add File</button>
             </Link>
           </div>

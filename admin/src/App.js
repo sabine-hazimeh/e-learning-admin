@@ -23,7 +23,7 @@ function App() {
           <Route path="/add-classes" element={<AddClasses />} />
           <Route path="/students" element={<Students />} />
           <Route path="/classes" element={<Classes />} />
-          <Route path="/files" element={<FileUpload />} />
+          <Route path="/files/:classId" element={<FileUpload />} />
           <Route path="/withdrawals" element={<WithDrawals />} />
         </Route>
       </Routes>
